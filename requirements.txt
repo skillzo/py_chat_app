@@ -1,2 +1,9 @@
 fastapi
 uvicorn
+pydantic-settings
+sqlalchemy
+psycopg2-binary
+redis
+python-dotenv
+passlib[bcrypt]
+email-validator  
