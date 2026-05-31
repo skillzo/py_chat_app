@@ -5,5 +5,8 @@ sqlalchemy
 psycopg2-binary
 redis
 python-dotenv
-passlib[bcrypt]
-email-validator  
+argon2-cffi
+email-validator
+structlog
+python-jose[cryptography]
+python-multipart

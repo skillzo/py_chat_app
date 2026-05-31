@@ -1,0 +1,7 @@
+{
+  "include": ["app"],
+  "typeCheckingMode": "basic",
+  "reportCallIssue": "error",
+  "reportArgumentType": "error",
+  "reportReturnType": "error"
+}

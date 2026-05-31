@@ -8,6 +8,8 @@ class UserCreate(BaseModel):
     password: str
 
 
+class UserUpdate(UserCreate):
+    id: UUID
 
 class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)

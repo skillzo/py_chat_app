@@ -1,23 +1,23 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.core.logging import RequestLoggingMiddleware, setup_logging
+from app.database import Base, engine
+from app.models import user as user_model  # noqa: F401
+from app.routers import auth, users
 
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("items/{item_id}")
-async def read_item(item_id: int):
-    return {"item_id": item_id}
+setup_logging()
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
 
 
-actor_skills = []
-async def what_can_you_do(skills: str):
-    for (skill) in actor_skills:
-        actor_skills.append(skills)
-    return {"skills": skills}
-  
-    
+app = FastAPI(lifespan=lifespan, title="Py Chat", description="A simple chat application", version="0.1.0")
+app.add_middleware(RequestLoggingMiddleware)
+
+app.include_router(users.router, prefix="/users", tags=["users"])
+app.include_router(auth.router, prefix="/auth", tags=["auth"])
